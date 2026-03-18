@@ -4,6 +4,7 @@ import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { Toaster } from "@ui";
+import AuthProvider from "@/providers/auth-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,8 +33,10 @@ export default function RootLayout({
       >
         <ErrorBoundary>
           <QueryProvider>
-            {children}
-            <Toaster position="top-right" />
+            <AuthProvider>
+              {children}
+              <Toaster position="top-right" />
+            </AuthProvider>
           </QueryProvider>
         </ErrorBoundary>
       </body>
