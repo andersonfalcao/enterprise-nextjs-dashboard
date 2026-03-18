@@ -5,6 +5,6 @@ import { queryKeys } from '@/lib/query-keys';
 export const useUsers = () => {
     return useQuery({
         queryKey: queryKeys.users.list(),
-        queryFn: getUsers
+        queryFn: getUsers,
     });
 }
