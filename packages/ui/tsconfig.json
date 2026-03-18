@@ -1,0 +1,12 @@
+{
+  "extends": "../config/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "noEmit": true,
+    "paths": {}
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
