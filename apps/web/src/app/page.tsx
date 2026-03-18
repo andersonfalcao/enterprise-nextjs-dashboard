@@ -4,6 +4,8 @@ import { useUsers } from "@/features/users/hooks/use-users";
 import { useEffect } from "react";
 import { showError } from "@/lib/toast";
 import { ProtectedRoute } from "@/components/protected-route";
+import { PermissionGuard } from "@/components/permission-guard";
+import { Button } from "@ui";
 
 export default function Home() {
   const { data, isLoading, error } = useUsers();
@@ -24,6 +26,10 @@ export default function Home() {
           <h1 className="text-5xl font-bold text-center sm:text-left">
           Users
           </h1>
+
+          <PermissionGuard resource="user" action="write">
+            <Button>Create New User</Button>
+          </PermissionGuard>
 
           <ul className="mt-2 w-full">
             {data?.map(user => (
