@@ -1,3 +1,5 @@
+import { logger } from '@logger';
+
 export class ApiError extends Error {
     constructor(
         public status: number,
@@ -11,17 +13,27 @@ export const apiClient = async <T>(
     url: string,
     options?: RequestInit
 ): Promise<T> => {
-    const response = await fetch(url, {
-        ...options,
-        headers: {
-            "Content-Type": "application/json",
-            ...(options?.headers || {}),
-        },
-    });
-    
-    if (!response.ok) {
-        throw new ApiError(response.status, await response.json());
-    }
+   try {
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                "Content-Type": "application/json",
+                ...(options?.headers || {}),
+            },
+        });
 
-    return response.json();
+        const data = await response.json().catch(() => null);
+        
+        
+        if (!response.ok) {
+            logger.error("Api Error", url, data);
+            throw new ApiError(response.status, data);
+        }
+
+        return data;
+   } catch (error) {
+        logger.error("Api Error", url, error);
+        throw new ApiError(500, error);
+    }
 }
+
