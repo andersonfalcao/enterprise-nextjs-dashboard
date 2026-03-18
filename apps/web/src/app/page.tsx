@@ -1,9 +1,17 @@
 "use client";
 
 import { useUsers } from "@/features/users/hooks/use-users";
+import { useEffect } from "react";
+import { showError } from "@/lib/toast";
 
 export default function Home() {
   const { data, isLoading, error } = useUsers();
+
+  useEffect(() => {
+    if (error) {
+      showError("Failed to load users");
+    }
+  }, [error]);
 
   if (isLoading) return <div>Loading users...</div>;
   if (error) return <div>Error loading users.</div>;
